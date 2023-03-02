@@ -1,0 +1,31 @@
+version: "3.9"
+services:
+  tui3:
+    build: .
+    image: tui:3-beta-nix
+    container_name: tui3
+    volumes:
+      - /tmp/.X11-unix/:/tmp/.X11-unix                #uncomment for MacOS or Linux
+      - ${HOME}/.config/pulse:/root/.config/pulse     #uncomment for MacOS or Linux
+      - image-downloads:/root:rw
+    environment:
+      #- DISPLAY=<IP OF ETHERNET OR WIFI CARD>:0      #uncomment for MacOS
+      #- PULSE_SERVER=<IP OF ETHERNET OR WIFI CARD>   #uncomment for MacOS
+      - DISPLAY=${DISPLAY}                            #uncomment for Linux
+      - PULSE_SERVER=10.3.0.1                         #uncomment for Linux
+    networks:
+      tui3_network:
+        ipv4_address: 10.3.0.5
+    #devices:
+    #- /dev/snd
+
+volumes:
+  image-downloads:
+
+networks:
+  tui3_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.3.0.0/24
+          gateway: 10.3.0.1
