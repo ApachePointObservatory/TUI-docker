@@ -6,7 +6,11 @@ This is a repository that holds the configuration and build files needed run Apa
 
 ### MacOS Prerequisites
 
-Install XQuartz (mandatory) and pulseaudio using Brew (optional, if you want sound).
+Install [Docker Desktop](https://www.docker.com/) (mandatory).
+
+Install [XQuartz](https://www.xquartz.org/) (mandatory). Open the XQuartz preferences, go to the **Security** tab, and **Allow connections from network clients**. Close the window and reboot your Mac.
+
+Install pulseaudio using [Brew](https://formulae.brew.sh/formula/repo) (optional, if you want sound). Reboot your Mac. Open a terminal and do ```pulseaudio -D --exit-idle-time=-1 --load=module-native-protocol-tcp``` to  start pulseaudio, then check your audio by doing ```pacmd play-sample 0 1```.
 
 Edit the file ```docker-compose.yml```. Uncomment the lines that terminate in ```#uncomment for MacOS``` and enter the IP address for your network interface card where indicated.
 
@@ -21,11 +25,14 @@ Example: if your network interface card's IP address is 192.168.3.5, the relevan
       - PULSE_SERVER=192.168.3.5   #uncomment for MacOS
       #- DISPLAY=${DISPLAY}                            #uncomment for Linux
       #- PULSE_SERVER=10.3.0.1                         #uncomment for Linux
-``` 
+```
+Proceed to section ***All Platforms***.
 
-### Linux
+### Linux Prerequisites
 
-Do not install Docker from your distribution's package repositories. Follow the [instructions documented on Docker's website](https://docs.docker.com/engine/) to install Docker.
+Do not install Docker from your distribution's package repositories. Follow the [instructions documented on Docker's website](https://docs.docker.com/engine/) to install Docker. You may either install the Docker Engine CLI or Docker Desktop. If you opt for Docker Desktop, follow the MacOS install instructions above.
+
+Install pulseaudio from your distribution's package repositories. Open a terminal and do ```pulseaudio -D --exit-idle-time=-1 --load=module-native-protocol-tcp``` to  start pulseaudio, then check your audio by doing ```pacmd play-sample 0 1```.
 
 Edit the file ```docker-compose.yml```. Uncomment the lines that terminate in ```#uncomment for Linux```. The rlevant lines should look as follows
 ```
@@ -39,21 +46,25 @@ Edit the file ```docker-compose.yml```. Uncomment the lines that terminate in ``
       - DISPLAY=${DISPLAY}                            #uncomment for Linux
       - PULSE_SERVER=10.3.0.1                         #uncomment for Linux
 ```
+Proceed to section ***All Platforms***.
+
+### Windows Prerequisites
+
+Instructions coming soon.
 
 ### All Platforms
 
 Install either the Docker engine or Docker Desktop. ```cd``` to the directory to where this repository was cloned and using the CLI run
 
 ```
+xhost +
 docker compose build
 docker compose up
 ```
 
-The first command will build the tui docker image using ```docker compose```, and the second will run a container using the built image using the parameters stored in ```docker-compose.yml```.
+The first command allows XWindows info to be passed between the Docker container and the host's (your) desktop. The second command will build the tui docker image using ```docker compose```. Finally, the third command will run a container using the built image using the parameters stored in ```docker-compose.yml```. If you can see all the TUI windows pop up, contratulations!
 
 
 ## Run Instructions
 
-To run your docker container again, your new TUI container can be restarted from Docker Desktop or from the command line by doing ```docker start tui3```.
-
-Alternatively, ```docker compose up``` can be run from the location of the ```docker-compose.yml``` file.
+To run your docker container, first open a terminal and do ```xhost +```. Your new TUI container can be restarted from Docker Desktop or from the command line by doing ```docker start tui3```. Alternatively, ```docker compose up``` can be run from the location of the ```docker-compose.yml``` file.
