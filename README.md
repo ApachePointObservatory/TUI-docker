@@ -30,7 +30,9 @@ Proceed to section ***All Platforms***.
 
 ### Linux Prerequisites
 
-Do not install Docker from your distribution's package repositories. Follow the [instructions documented on Docker's website](https://docs.docker.com/engine/) to install Docker. You may either install the Docker Engine CLI or Docker Desktop. If you opt for Docker Desktop, follow the MacOS install instructions with regard to the ```docker-compose.yml``` file above (* *i.e.* * do not install XQuartz, and install pulseaudio as described in the following step).
+Do not install Docker from your distribution's package repositories. Follow the [instructions documented on Docker's website](https://docs.docker.com/engine/) to install Docker. You may either install the Docker Engine CLI or Docker Desktop.
+
+If you opt for Docker Desktop, follow the MacOS install instructions with regard to the ```docker-compose.yml``` file above (* *i.e.* * do not install XQuartz, and install pulseaudio as described in the following step).
 
 Install pulseaudio from your distribution's package repositories. Open a terminal and do ```pulseaudio -D --exit-idle-time=-1 --load=module-native-protocol-tcp``` to  start pulseaudio, then check your audio by doing ```pacmd play-sample 0 1```.
 
@@ -54,17 +56,15 @@ Instructions coming soon.
 
 ### All Platforms
 
-Install either the Docker engine or Docker Desktop. ```cd``` to the directory to where this repository was cloned and using the CLI run
-
+Install either the Docker engine or Docker Desktop. ```cd``` to the directory to where this repository was cloned and using the CLI do
 ```
 xhost +
 docker compose build
 docker compose up
 ```
-
 The first command allows XWindows info to be passed between the Docker container and the host's (your) desktop. The second command will build the tui docker image using ```docker compose```. Finally, the third command will run a container using the built image using the parameters stored in ```docker-compose.yml```. If you can see all the TUI windows pop up, contratulations!
 
 
 ## Run Instructions
 
-To run your docker container, first open a terminal and do ```xhost +```. Your new TUI container can be restarted from Docker Desktop or from the command line by doing ```docker start tui3```. Alternatively, ```docker compose up``` can be run from the location of the ```docker-compose.yml``` file.
+To run your docker container after the initial build and run, first open a terminal and do ```xhost +```. Your new TUI container can be restarted from Docker Desktop or from the command line by doing ```docker start tui3```. Alternatively, ```docker compose up``` can be run from the location of the ```docker-compose.yml``` file.
