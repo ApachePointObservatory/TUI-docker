@@ -16,8 +16,6 @@ services:
     networks:
       tui3_network:
         ipv4_address: 10.3.0.5
-    #devices:
-    #- /dev/snd
 
 volumes:
   image-downloads:
