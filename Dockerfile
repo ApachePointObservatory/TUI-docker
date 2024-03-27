@@ -14,7 +14,7 @@ RUN apt-get update -y && 					\
 		-y --no-install-recommends &&			\
 	apt-get clean
 RUN pip3 install numpy Pillow matplotlib astropy pygame twisted
-RUN git clone -b 'v3.1.4twistedfix' https://github.com/ApachePointObservatory/TUI3.git python/TUI3
+RUN git clone -b 'v3.1.4twistedfix' --recurse-submodules https://github.com/ApachePointObservatory/TUI3.git python/TUI3
 ## Later get the APO scripts moved here using a git clone.
 
 CMD ["python3", "python/TUI3/runtui.py"]
